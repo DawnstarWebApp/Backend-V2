@@ -1,5 +1,5 @@
 {
-  "name": "backend-Service",
+  "name": "dawnstar-backend",
   "version": "1.0.0",
   "description": "Dawnstar application backend Service",
   "main": "app.js",
