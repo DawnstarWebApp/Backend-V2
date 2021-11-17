@@ -21,15 +21,17 @@ services:
     volumes:
       - ./postgresdata:/var/lib/postgresql/data
       - ./src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/dbinit.sql
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: dawnstardb
+    networks:
+      - dawnstar-db
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4:6.1
-    restart: always
+    restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: kennguch3@gmail.com
       PGADMIN_DEFAULT_PASSWORD: postgress
@@ -40,6 +42,12 @@ services:
       - pgadmin-data:/var/lib/pgadmin
     depends_on:
       - dawnstar-db
+    networks:
+      - dawnstar-db
+
+networks:
+  dawnstar-db:
+    driver: bridge
 volumes:
-  db-data:
+  dawnstar-db:
   pgadmin-data:
