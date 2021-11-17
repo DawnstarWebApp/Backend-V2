@@ -10,13 +10,13 @@
   "author": "Kennedy Ngure",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/DawnstarWebApp/Backends"
   },
   "license": "MIT",
   "bugs": {
-    "url": "/issues"
+    "url": "https://github.com/DawnstarWebApp/Backends/issues"
   },
-  "homepage": "#readme",
+  "homepage": "https://github.com/DawnstarWebApp/Backends#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "dotenv": "^10.0.0",

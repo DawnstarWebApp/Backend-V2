@@ -12,8 +12,9 @@ const url = process.env.APP_URL || 'http://localhost';
 app.use(express.urlencoded({extended: true}))
     .use(bodyParser.json())
     .use(morgan(`tiny`));
+
 app.get('/', (req, res, next) => {
-    res.send(" Dawnstar Api Started")
+    res.send(" Dawn Star Api Started")
     res.status(StatusCodes.OK)
 })
 
