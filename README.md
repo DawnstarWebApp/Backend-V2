@@ -1,2 +1,2 @@
 # Backends
-New BackEnd Service awaiting gateway build
+New Backend Service awaiting gateway build

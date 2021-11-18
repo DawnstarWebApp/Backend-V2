@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "dawnstar-db",
+      "Group": "Servers",
+      "Port": 5432,
+      "Username": "postgres",
+      "Host": "dawnstar-db",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "postgres"
+    }
+  }
+}
