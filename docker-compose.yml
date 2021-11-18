@@ -40,6 +40,7 @@ services:
       - "8080:80"
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+      - pgadmin_data/servers.json:/pgadmin4/servers.json
     depends_on:
       - dawnstar-db
     networks:
