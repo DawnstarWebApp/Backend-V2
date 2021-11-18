@@ -30,7 +30,7 @@ services:
       - dawnstar-db
   pgadmin:
     container_name: pgadmin
-    image: dpage/pgadmin4:6.1
+    image: dpage/pgadmin4:6.2
     restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: kennguch3@gmail.com
@@ -40,7 +40,8 @@ services:
       - "8080:80"
     volumes:
       - pgadmin-data:/var/lib/pgadmin
-      - pgadmin_data/servers.json:/pgadmin4/servers.json
+      - ./utils/servers.json:/pgadmin4/servers.json # preconfigured servers/connections
+      - ./utils/pgpass:/pgpass # passwords for the connections in this files
     depends_on:
       - dawnstar-db
     networks:
