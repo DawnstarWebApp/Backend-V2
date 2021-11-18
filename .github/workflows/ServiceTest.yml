@@ -1,4 +1,4 @@
-name: Node.js CI
+name: dawnstar-backend CI
 
 on: [push, pull_request]
 
