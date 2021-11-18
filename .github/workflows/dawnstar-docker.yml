@@ -1,4 +1,4 @@
-name: Dawnstar Docker Compose Actions Workflow
+name: Dawnstar Docker Compose Workflow
 
 on: push
 jobs:
