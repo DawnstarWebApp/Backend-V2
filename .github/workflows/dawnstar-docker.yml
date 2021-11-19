@@ -7,6 +7,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the Container Stack
+        id: build-container-stack
         run: docker-compose up -d
-      - name: Test
+      - name: Testing Dawnstar Backend
         run: docker run --network container:dawnstar-backend appropriate/curl -s --retry 10 --retry-connrefused http://localhost:3000/
+      - name: Test Dawnstar Postgres Database
+        run: docker run --network container:dawnstar-db appropriate/curl -s --retry 10 --retry-connrefused http://localhost:5432/
+      - name: Test Dawnstar Postgres Interface
+        run: docker run --network container:pgadmin appropriate/curl -s --retry 10 --retry-connrefused http://localhost:8080/
+      - name: Stopping Container Stack
+        run: docker-compose down
+      - name: Get the Output time
+        run: echo "The time was ${{ steps.build-container-stack.outputs.time }} seconds"
