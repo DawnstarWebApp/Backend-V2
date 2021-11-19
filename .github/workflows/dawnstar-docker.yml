@@ -9,4 +9,5 @@ jobs:
       - name: Build the Container Stack
         run: docker-compose up -d
       - name: Test
-        run: docker run --network container:dawnstar-backend appropriate/curl -s --retry 10 --retry-connrefused http://localhost:3000/
+        run: docker run --network container:dawnstar-backend curl -s --retry 10 --retry-connrefused http://localhost:3000/
+
