@@ -1,9 +1,13 @@
-const Amenity = require("../models/amenity.model.js");
+const db = require("../models/index.model");
+const Amenity = db.amenity;
+const Op = db.Sequelize.Op;
 
 //Create and Save a new Amenity
 exports.create = (req, res) => {
+
+    console.log(req.body.name)
     //validate type request
-    if (!req.body.type) {
+    if (!req.body.name) {
         return res.status(400).send({
             message: "Amenity name can not be empty",
         });
@@ -11,7 +15,7 @@ exports.create = (req, res) => {
 
     //create an amenity
     const amenity = new Amenity({
-        type: req.body.type,
+        amenity_name: req.body.name,
     });
 
     //save amenity in the database
@@ -28,22 +32,24 @@ exports.create = (req, res) => {
 };
 
 // Retrieve and return all amenities from the database.
-exports.getAll = (req, res) => {
-    Amenity.find()
+exports.findAll = (req, res) => {
+    Amenity.findAll()
         .then((amenities) => {
             res.send(amenities);
         })
         .catch((err) => {
-            es.status(500).send({
-                message:
-                    err.message || "Some error occurred while retrieving amenities.",
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving amenities.",
             });
         });
+
 };
 
 //Retrieve and return a single amenity with a amenityId
-exports.getOne = (req, res) => {
-    Amenity.findById(req.params.amenityId)
+exports.findOne = (req, res) => {
+    const amenity_id = req.params.amenityId;
+console.log(amenity_id);
+    Amenity.findByPk(amenity_id)
         .then((amenity) => {
             if (!amenity) {
                 return res.status(404).send({
@@ -54,7 +60,10 @@ exports.getOne = (req, res) => {
         })
         .catch((err) => {
             if (err.kind === "ObjectId") {
+                console.log(res.params.amenityId);
+
                 return res.status(404).send({
+
                     message: "Amenity not found with id " + req.params.amenityId,
                 });
             }

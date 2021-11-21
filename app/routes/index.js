@@ -1,0 +1,1 @@
+require('./amenity.routes.js');
