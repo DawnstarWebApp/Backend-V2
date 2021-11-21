@@ -1,21 +1,21 @@
 const {DataTypes} = require("sequelize");
 
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize) => {
     return sequelize.define("amenities", {
             amenity_id: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
                 primaryKey: 1,
-                autoIncrement: 1,
+                defaultValue: DataTypes.UUIDV4,
                 allowNull: 0
             },
             amenity_name: {
-                type: DataTypes.STRING,
+                type: DataTypes.STRING(30),
                 allowNull: 0
             },
         }, {
             timestamps: 1,
-        freezeTableName: 1,
-        modelName: 'Amenity'
+            freezeTableName: 1,
+            modelName: 'Amenity'
         }
     );
 };

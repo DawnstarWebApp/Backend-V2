@@ -8,7 +8,7 @@ module.exports = (app) => {
     app.get('/amenities', amenities.findAll);
 
     //Retrieve a single amenity with amenityId
-    app.get('/amenities/:amenity_id', amenities.findOne);
+    app.get('/amenities/:amenityId', amenities.findOne);
 
     //Update a amenity with amenityId
     app.put('/amenities/:amenityId', amenities.update);

@@ -5,7 +5,6 @@ const Op = db.Sequelize.Op;
 //Create and Save a new Amenity
 exports.create = (req, res) => {
 
-    console.log(req.body.name)
     //validate type request
     if (!req.body.name) {
         return res.status(400).send({
@@ -20,8 +19,8 @@ exports.create = (req, res) => {
 
     //save amenity in the database
     amenity.save()
-        .then((data) => {
-            res.send(data);
+        .then((amenity) => {
+            res.send(amenity);
         })
         .catch((err) => {
             res.status(500).send({
@@ -47,20 +46,18 @@ exports.findAll = (req, res) => {
 
 //Retrieve and return a single amenity with a amenityId
 exports.findOne = (req, res) => {
-    const amenity_id = req.params.amenityId;
-console.log(amenity_id);
-    Amenity.findByPk(amenity_id)
+    const amenityId = req.params.amenityId;
+    Amenity.findOne({ where: { amenity_id: amenityId}})
         .then((amenity) => {
             if (!amenity) {
                 return res.status(404).send({
-                    message: "Amenity not found with id " + req.params.amenityId,
+                    message: "Amenity not found with id " + amenityId,
                 });
             }
             res.send(amenity);
         })
         .catch((err) => {
             if (err.kind === "ObjectId") {
-                console.log(res.params.amenityId);
 
                 return res.status(404).send({
 
@@ -76,17 +73,17 @@ console.log(amenity_id);
 // Update a amenity identified by the amenityId in the request
 exports.update = (req, res) => {
     //validate type request
-    if (!req.body.type) {
+    if (!req.body.name) {
         return res.status(400).send({
             message: "Amenity name can not be empty",
         });
     }
 
     // Find amenity and update it with the request body
-    Amenity.findByIdAndUpdate(
+    Amenity.update(
         req.params.amenityId,
         {
-            type: req.body.type,
+            amenity_name: req.body.name,
         },
         {new: true}
     )

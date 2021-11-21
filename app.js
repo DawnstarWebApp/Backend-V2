@@ -26,7 +26,14 @@ const server = app.listen(port, () => {
         db.sequelize.authenticate()
             .then(() => {
                 console.log('Database Connection established successfully.');
-                db.sequelize.sync();
+                db.sequelize.sync()
+                    .then(() => {
+                        console.log('Database Synchronized successfully.');
+                    })
+                    .catch(err => {
+                        console.log('Database Synchronization failed.');
+                        console.log(err);
+                    });
 
             })
             .catch(err => {
