@@ -1,6 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
-const {ReasonPhrases, StatusCodes, getReasonPhrase, getStatusCode,} = require('http-status-codes');
+const {StatusCodes} = require('http-status-codes');
 const bodyParser = require("body-parser");
 const app = express();
 

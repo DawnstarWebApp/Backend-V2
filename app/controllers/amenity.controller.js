@@ -1,74 +1,46 @@
 const db = require("../models/index.model");
+const validations = require("../utils/validations");
 const Amenity = db.amenity;
-const Op = db.Sequelize.Op;
 
 //Create and Save a new Amenity
 exports.create = (req, res) => {
 
-    //validate type request
-    if (!req.body.name) {
-        return res.status(400).send({
-            message: "Amenity name can not be empty",
-        });
-    }
-
-    //create an amenity
     const amenity = new Amenity({
-        amenity_name: req.body.name,
+        amenity_name: req.body.name
     });
 
     //save amenity in the database
     amenity.save()
         .then((amenity) => {
-            res.send(amenity);
+            validations.createOne(res, amenity);
         })
         .catch((err) => {
-            res.status(500).send({
-                message:
-                    err.message || "Some error occurred while creating the Amenity.",
-            });
+            validations.errorResponse(err, res, "Amenity")
         });
 };
-
 // Retrieve and return all amenities from the database.
 exports.findAll = (req, res) => {
     Amenity.findAll()
         .then((amenities) => {
-            res.send(amenities);
+            validations.showAll(res, amenities)
         })
         .catch((err) => {
-            res.status(500).send({
-                message: err.message || "Some error occurred while retrieving amenities.",
-            });
-        });
+            validations.errorResponse(err, res, "Amenity")
 
+        });
 };
 
 //Retrieve and return a single amenity with a amenityId
 exports.findOne = (req, res) => {
-    const amenityId = req.params.amenityId;
-    Amenity.findOne({ where: { amenity_id: amenityId}})
+    Amenity.findOne({where: {amenity_id: req.params.amenityId}})
         .then((amenity) => {
-            if (!amenity) {
-                return res.status(404).send({
-                    message: "Amenity not found with id " + amenityId,
-                });
-            }
-            res.send(amenity);
+           return validations.showOne(res, amenity)
+
         })
         .catch((err) => {
-            if (err.kind === "ObjectId") {
-
-                return res.status(404).send({
-
-                    message: "Amenity not found with id " + req.params.amenityId,
-                });
-            }
-            return res.status(500).send({
-                message: "Error retrieving amenity with id " + req.params.amenityId,
-            });
+           return validations.errorResponse(err, res, "Amenity")
         });
-};
+}
 
 // Update a amenity identified by the amenityId in the request
 exports.update = (req, res) => {
@@ -80,22 +52,23 @@ exports.update = (req, res) => {
     }
 
     // Find amenity and update it with the request body
-    Amenity.update(
-        req.params.amenityId,
+
+    Amenity.update({amenity_name: req.body.name},
         {
-            amenity_name: req.body.name,
-        },
-        {new: true}
-    )
+            where: {amenity_id: req.params.amenityId},
+
+        })
         .then((amenity) => {
             if (!amenity) {
                 return res.status(404).send({
                     message: "Amenity not found with id " + req.params.amenityId,
                 });
             }
+            // res.send({message: amenity.amenity_name + " updated successfully!"});
             res.send(amenity);
         })
         .catch((err) => {
+            console.log(err)
             if (err.kind === "ObjectId") {
                 return res.status(404).send({
                     message: "Amenity not found with id " + req.params.amenityId,
@@ -117,14 +90,7 @@ exports.delete = (req, res) => {
                 });
             }
             res.send({message: "Amenity deleted successfully!"});
-        }).catch(err => {   //if error
-        if (err.kind === "ObjectId" || err.name === "NotFound") {
-            return res.status(404).send({
-                message: "Amenity not found with id " + req.params.amenityId,
-            });
-        }
-        return res.status(500).send({
-            message: "Could not delete amenity with id " + req.params.amenityId,
-        });
+        }).catch((err) => {
+        validations.errorResponse(err, res, "Amenity")
     });
 };
