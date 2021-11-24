@@ -35,7 +35,8 @@ module.exports = (sequelize) => {
             },
         }, {
             timestamps: 1,
-            freezeTableName: 1,
+        paranoid: 1,
+        freezeTableName: 1,
             modelName: 'Amenity'
         }
     );

@@ -12,7 +12,7 @@ exports.create = (req, res) => {
     //save amenity in the database
     amenity.save()
         .then((amenity) => {
-            validations.createOne(res, amenity);
+            return validations.successMessage(res, amenity.amenity_name, "create")
         })
         .catch((err) => {
             validations.errorResponse(err, res, "Amenity")
@@ -34,63 +34,41 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     Amenity.findOne({where: {amenity_id: req.params.amenityId}})
         .then((amenity) => {
-           return validations.showOne(res, amenity)
+            return validations.showOne(res, amenity)
 
         })
         .catch((err) => {
-           return validations.errorResponse(err, res, "Amenity")
+            return validations.errorResponse(err, res, "Amenity")
         });
 }
 
 // Update a amenity identified by the amenityId in the request
 exports.update = (req, res) => {
-    //validate type request
-    if (!req.body.name) {
-        return res.status(400).send({
-            message: "Amenity name can not be empty",
-        });
-    }
-
     // Find amenity and update it with the request body
-
     Amenity.update({amenity_name: req.body.name},
-        {
-            where: {amenity_id: req.params.amenityId},
-
-        })
+        {where: {amenity_id: req.params.amenityId}, returning: true, plain: true})
         .then((amenity) => {
-            if (!amenity) {
-                return res.status(404).send({
-                    message: "Amenity not found with id " + req.params.amenityId,
-                });
-            }
-            // res.send({message: amenity.amenity_name + " updated successfully!"});
-            res.send(amenity);
+
+            console.log(amenity);
+            return validations.successMessage(res, amenity, "update");
         })
         .catch((err) => {
-            console.log(err)
-            if (err.kind === "ObjectId") {
-                return res.status(404).send({
-                    message: "Amenity not found with id " + req.params.amenityId,
-                });
-            }
-            return res.status(500).send({
-                message: "Error updating amenity with id " + req.params.amenityId,
-            });
+            return validations.errorResponse(err, res, "Amenity");
         });
+
 };
 
 //delete a amenity with the specified amenityId in the request
 exports.delete = (req, res) => {
-    Amenity.findByIdAndRemove(req.params.amenityId)
+    Amenity.destroy({where: {amenity_id: req.params.amenityId}})
         .then(amenity => {
             if (!amenity) {
-                return res.status(404).send({
-                    message: "Amenity not found with id " + req.params.amenityId,
-                });
+                throw  new Error("NotFound");
             }
-            res.send({message: "Amenity deleted successfully!"});
+            return validations.successMessage(res, amenity, "delete")
+
         }).catch((err) => {
+
         validations.errorResponse(err, res, "Amenity")
     });
 };

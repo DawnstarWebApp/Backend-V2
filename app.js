@@ -8,6 +8,7 @@ const app = express();
 const db = require("./app/models/index.model.js");
 
 const port = 3000;
+const environment = process.env.APP_ENV || 'production';
 const url = process.env.APP_URL || 'http://localhost';
 
 app.use(express.urlencoded({extended: false}))
@@ -15,17 +16,20 @@ app.use(express.urlencoded({extended: false}))
     .use(morgan(`tiny`));
 
 app.get('/', (req, res, next) => {
-    res.json({"Message": "Welcome to Dawnstar web Application!"});
+    res.json({"Message": "Welcome to " + process.env.APP_NAME +" web Application!"});
     res.status(StatusCodes.OK)
 })
 
-require('./app/routes/amenity.routes.js')(app);
+require('./app/routes/indexs')(app);
 
 const server = app.listen(port, () => {
         console.log(`Checking database connection...`);
         db.sequelize.authenticate()
             .then(() => {
                 console.log('Database Connection established successfully.');
+                if (environment === 'development') {
+                    db.sequelize.sync({force: true})
+                }
                 db.sequelize.sync()
                     .then(() => {
                         console.log('Database Synchronized successfully.');
