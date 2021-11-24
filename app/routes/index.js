@@ -1,1 +1,4 @@
-require('./amenity.routes.js');
+module.exports = (app) => {
+
+    require('./amenity.routes.js');
+}

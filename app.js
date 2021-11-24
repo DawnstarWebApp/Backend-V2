@@ -20,7 +20,7 @@ app.get('/', (req, res, next) => {
     res.status(StatusCodes.OK)
 })
 
-require('./app/routes/indexs')(app);
+require('./app/routes/index')(app);
 
 const server = app.listen(port, () => {
         console.log(`Checking database connection...`);
