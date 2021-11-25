@@ -1,4 +1,3 @@
 module.exports = (app) => {
-
-    require('./amenity.routes.js');
+    require('./amenity.routes.js')(app);
 }
