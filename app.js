@@ -17,7 +17,7 @@ const url = process.env.APP_URL || 'http://localhost';
 app.use(express.urlencoded({extended: false}))
     .use(bodyParser.json())
     .use(morgan(`tiny`))
-    .use(responseTime())
+    // .use(responseTime())
 ;
 
 app.get('/', (req, res, next) => {
