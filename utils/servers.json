@@ -1,13 +1,14 @@
 {
   "Servers": {
     "1": {
-      "Name": "dawnstar-db",
+      "Name": "Dawnstar LTD",
       "Group": "Servers",
       "Port": 5432,
       "Username": "postgres",
       "Host": "dawnstar-db",
       "SSLMode": "prefer",
-      "MaintenanceDB": "postgres"
+      "MaintenanceDB": "postgres",
+      "Password": "/pgpass"
     }
   }
 }
