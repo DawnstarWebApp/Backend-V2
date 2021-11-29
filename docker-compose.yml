@@ -10,10 +10,12 @@ services:
       - dawnstar-redis
     restart: on-failure
     environment:
-#      DATABASE_URL: postgres://postgres:postgres@postgres:5432/dawnstar-db
-      APP_ENV: development
-      PORT: 3000
-      DB_HOST: dawnstar-db
+      APP_PORT: 3000
+      APP_ENV: "development"
+      APP_NAME: "development"
+      DB_HOST: "dawnstar-db"
+      DB_NAME: "dawnstardb"
+      DB_PORT: 5432
     ports:
       - "3000:3000"
     networks:
