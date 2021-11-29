@@ -1,5 +1,4 @@
 const {ReasonPhrases, StatusCodes} = require('http-status-codes');
-const {errorResponse} = require("./validations");
 
 exports.errorResponse = (err, res, objectName) => {
     console.log(err.name);
@@ -23,7 +22,7 @@ exports.errorResponse = (err, res, objectName) => {
             error: ReasonPhrases.CONFLICT,
             message: err.message || " Association Error on " + objectName + "."
         });
-    } else if (err.message === "NotFound") {
+    } else if (err.message === "NotFound"  || err.name === "NotFoundError") {
         return res.status(StatusCodes.NOT_FOUND).send({
             status: err.statusCode || StatusCodes.NOT_FOUND,
             error: ReasonPhrases.NOT_FOUND,
@@ -44,18 +43,16 @@ exports.showAll = (res, model) => {
         data: model
     });
 }
-exports.successMessage = (res, model, action) => {
+exports.successMessage = (res, name, action) => {
     let status = StatusCodes.OK
-    if (
-        action === "delete"
-    ) {
+    if (action === "delete") {
         status = StatusCodes.NO_CONTENT
     }
 
     return res.status(status).send({
         status: status,
         message: ReasonPhrases.OK,
-        data: "Successfully " + action + "d " + model
+        data: "Successfully " + action + "d " + name
     });
 }
 
@@ -75,9 +72,3 @@ exports.showOne = (res, model) => {
     });
 }
 
-exports.deleteOne = (res, model) => {
-    return res.status(StatusCodes.NO_CONTENT).send({
-        status: StatusCodes.NO_CONTENT,
-        message: model + " deleted successfully"
-    });
-}
