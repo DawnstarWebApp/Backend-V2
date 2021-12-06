@@ -21,5 +21,6 @@ db.sequelize = sequelize;
 
 //Models/tables
 db.amenity = require("./amenity.model")(sequelize, Sequelize);
+db.category = require("./category.model")(sequelize, Sequelize);
 
 module.exports = db;

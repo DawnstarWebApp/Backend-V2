@@ -1,5 +1,5 @@
-module.exports = (app) => {
-    const amenities = require('../controllers/amenity.controller.js');
+module.exports = async (app) => {
+    const amenities = await require('../controllers/amenity.controller.js');
 
     //create a new amenity
     app.post('/amenities', amenities.create);

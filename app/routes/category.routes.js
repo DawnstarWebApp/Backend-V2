@@ -1,15 +1,14 @@
-const categories  = require('../controllers/amenity.controller');
+module.exports = async (app) => {
+    const categories = await require('../controllers/category.controller.js');
 
-module.exports = (app) =>
-{
     //create a new category
     app.post('/categories', categories.create);
 
     //Retrieve all categories
-    app.get('/categories', categories.getAll);
+    app.get('/categories', categories.findAll);
 
     //Retrieve a single categories with categoryId
-    app.get('/categories', categories.getOne)
+    app.get('/categories', categories.findOne);
 
     //Update a category with categoryId
     app.put('/categories', categories.update);

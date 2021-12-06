@@ -8,6 +8,8 @@ const app = express();
 
 //Database connections
 const db = require("./app/models/index.model.js");
+//Routes
+const routes = require('./app/routes/index.js')(app);
 
 const port = process.env.APP_PORT || 3000;
 const environment = process.env.APP_ENV || 'production';
@@ -23,7 +25,6 @@ app.get('/', (req, res, next) => {
     res.status(StatusCodes.OK)
 })
 
-require('./app/routes/index')(app);
 
 const server = app.listen(port, () => {
         console.log(`Checking database connection...`);

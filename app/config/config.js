@@ -3,7 +3,7 @@ const dotenv = require('dotenv').config();
 const host = process.env.DB_HOST || "localhost";
 const user = process.env.DB_USER || "postgres";
 const password = process.env.DB_PASSWORD || "postgres";
-const database = process.env.DB_NAME || "postgres";
+const database = process.env.DB_NAME || "dawnstardb";
 const dialect = process.env.DB || "postgres";
 
 module.exports =
