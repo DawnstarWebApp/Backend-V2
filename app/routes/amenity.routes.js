@@ -10,9 +10,9 @@ module.exports = (app) => {
     //Retrieve a single amenity with amenityId
     app.get('/amenities/:amenityId', amenities.findOne);
 
-    //Update a amenity with amenityId
+    //Update an amenity with amenityId
     app.put('/amenities/:amenityId', amenities.update);
 
-    //delete a amenity with amenityId
+    //delete an amenity with amenityId
     app.delete('/amenities/:amenityId', amenities.delete);
 }

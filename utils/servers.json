@@ -8,7 +8,7 @@
       "Host": "dawnstar-db",
       "SSLMode": "prefer",
       "MaintenanceDB": "postgres",
-      "Password": "/pgpass"
+      "Password": "pgpass"
     }
   }
 }
