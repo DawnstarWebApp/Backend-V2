@@ -1,6 +1,7 @@
-module.exports = async (app) => {
-    const categories = await require('../controllers/category.controller.js');
+const categories  = require('../controllers/category.controller');
 
+module.exports = (app) =>
+{
     //create a new category
     app.post('/categories', categories.create);
 
@@ -8,11 +9,11 @@ module.exports = async (app) => {
     app.get('/categories', categories.findAll);
 
     //Retrieve a single categories with categoryId
-    app.get('/categories', categories.findOne);
+    app.get('/categories/:id', categories.findOne)
 
     //Update a category with categoryId
-    app.put('/categories', categories.update);
+    app.put('/categories/:id', categories.update);
 
     //delete a category with categoryId
-    app.delete('/categories', categories.delete);
+    app.delete('/categories/:id', categories.delete);
 }

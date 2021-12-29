@@ -1,6 +1,5 @@
-const db = require("../models/index.model");
+const {Amenity} = require("../models/index.model");
 const validations = require("../utils/validations");
-const Amenity = db.amenity;
 
 //Create and Save a new Amenity
 exports.create = async (req, res) => {
@@ -27,7 +26,7 @@ exports.findAll = async (req, res) => {
 //Retrieve and return a single amenity with a amenityId
 exports.findOne = async (req, res) => {
     try {
-        const amenity = await Amenity.findOne({where: {amenity_id: req.params.amenityId}})
+        const amenity = await Amenity.findOne({where: {amenity_id: req.params.id}})
 
         return validations.showOne(res, amenity)
     } catch (err) {
@@ -40,11 +39,11 @@ exports.update = async (req, res) => {
     try {
         // Find amenity and update it with the request body
         await Amenity.update({amenity_name: req.body.name}, {
-            where: {amenity_id: req.params.amenityId},
+            where: {amenity_id: req.params.id},
             returning: true,
             plain: true
         })
-        const amenity = await Amenity.findOne({where: {amenity_id: req.params.amenityId}})
+        const amenity = await Amenity.findOne({where: {amenity_id: req.params.id}})
 
         return validations.successMessage(res, amenity.amenity_name, "update");
     } catch (err) {
@@ -56,7 +55,7 @@ exports.update = async (req, res) => {
 //delete a amenity with the specified amenityId in the request
 exports.delete = async (req, res) => {
     try {
-        Amenity.destroy({where: {amenity_id: req.params.amenityId}})
+        await Amenity.destroy({where: {amenity_id: req.params.id}})
         return validations.successMessage(res, "amenity", "delete");
     } catch (err) {
         return validations.errorResponse(err, res, "Amenity")
