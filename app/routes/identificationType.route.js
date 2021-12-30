@@ -14,5 +14,6 @@ module.exports = (app) => {
     // Update a IdentificationType with id
     app.put('/identificationTypes/:id', identificationType.update);
 
-
+    // Delete a IdentificationType with id
+    app.delete('/identificationTypes/:id', identificationType.delete);
 }
