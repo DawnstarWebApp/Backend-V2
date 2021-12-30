@@ -1,7 +1,6 @@
-const categories  = require('../controllers/category.controller');
+const categories = require('../controllers/category.controller');
 
-module.exports = (app) =>
-{
+module.exports = (app) => {
     //create a new category
     app.post('/categories', categories.create);
 

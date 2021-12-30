@@ -9,7 +9,7 @@ exports.create = async (req, res) => {
     try {
         const category = await new Category({
 
-        category_name: req.body.name
+            category_name: req.body.name
         });
         await category.save()
         return validations.successMessage(res, category.category_name, "create")
@@ -17,9 +17,9 @@ exports.create = async (req, res) => {
         return validations.errorResponse(err, res, "Category")
     }
 
-    }
+}
 //retrieve all categories
-exports.findAll = async  (req, res) => {
+exports.findAll = async (req, res) => {
 
 
     try {
@@ -33,7 +33,7 @@ exports.findAll = async  (req, res) => {
 // Retrive a single category with a categoryId
 exports.findOne = async (req, res) => {
     try {
-        const category = await Category.findOne({where: {category_id: req.params.id}})
+        const category = await Category.findOne({where: {id: req.params.id}})
 
         return validations.showOne(res, category)
     } catch (err) {
@@ -42,16 +42,15 @@ exports.findOne = async (req, res) => {
 }
 
 //Update a category identified by the categoryId in the request
-exports.update = async  (req, res) => {
+exports.update = async (req, res) => {
     try {
         // Find Category and update it with the request body
         await Category.update({category_name: req.body.name}, {
-            where: {category_id: req.params.id},
+            where: {id: req.params.id},
             returning: true,
             plain: true
         })
-        const category = await Category.findOne({where: {category_id: req.params.id}})
-
+        const category = await Category.findOne({where: {id: req.params.id}})
         return validations.successMessage(res, category.category_name, "update");
     } catch (err) {
         return validations.errorResponse(err, res, "Category")
@@ -59,10 +58,10 @@ exports.update = async  (req, res) => {
 }
 
 // Delete a category with the specified categoryId in the request
-exports.delete =async (req, res) => {
+exports.delete = async (req, res) => {
 
     try {
-        await Category.destroy({where: {category_id: req.params.id}})
+        await Category.destroy({where: {id: req.params.id}})
         return validations.successMessage(res, "Category", "delete");
     } catch (err) {
         return validations.errorResponse(err, res, "Category")

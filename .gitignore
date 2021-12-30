@@ -105,4 +105,4 @@ dist
 #intermediate
 .idea/
 
-postgresdata
+./postgresdata
