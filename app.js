@@ -31,14 +31,11 @@ const server = app.listen(port, () => {
         .then(() => {
             console.log('Database Connection Established Successfully.');
             if (environment === 'development') {
-                db.sequelize.sync({force: true})
-
+                db.sequelize.sync({alter: true})
             } else {
                 db.sequelize.sync()
-
             }
             console.log(`${environment} Database Synchronized Successfully.`);
-
         })
         .catch(err => {
             console.log('Database Synchronization failed.');
