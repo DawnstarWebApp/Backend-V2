@@ -4,11 +4,13 @@
       "Name": "Dawnstar LTD",
       "Group": "Servers",
       "Port": 5432,
-      "Username": "postgres",
+      "Username": "admin",
       "Host": "dawnstar-db",
       "SSLMode": "prefer",
-      "MaintenanceDB": "postgres",
-      "Password": "/pgpass"
+      "MaintenanceDB": "dawnstar-db",
+      "Password": "dawnstar",
+      "FGColor": "#475C12",
+      "Comment": "Database being used by the api service"
     }
   }
 }
