@@ -1,7 +1,7 @@
 version: "3"
 services:
   dawnstar-backend:
-    container_name: dawnstar-backend
+    image: dawnstar-backend
     build:
       context: .
       dockerfile: Dockerfile
@@ -16,8 +16,8 @@ services:
       DB_HOST: dawnstar-db
       DB_NAME: ${DB_NAME}
       DB_PORT: ${DB_PORT}
-    ports:
-      - "${APP_PORT}:${APP_PORT}"
+    expose:
+      - ${APP_PORT}
     networks:
       - dawnstar
   dawnstar-db:
@@ -37,7 +37,6 @@ services:
       - dawnstar
 
   dawnstar-pgadmin:
-    container_name: dawnstar-pgadmin
     image: dpage/pgadmin4:6.2
     restart: unless-stopped
     environment:
@@ -63,6 +62,37 @@ services:
       - "${REDIS_PORT}:6379"
     networks:
       - dawnstar
+  dawnstar-nginx:
+    build: ./nginx
+    image: reverse-proxy
+    ports:
+      - "${NGINX_PORT}:80"
+    depends_on:
+      - dawnstar-backend
+    healthcheck:
+      test: curl --fail -s http://localhost:1337/ || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - dawnstar
+
+
+
+
+
+#  dawnstar-rabbitmq:
+#    image: rabbitmq:3.9.11-management-alpine
+#    container_name: 'rabbitmq'
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    volumes:
+#      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+#      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+#    networks:
+#      - dawnstar
+
 networks:
   dawnstar:
     driver: bridge

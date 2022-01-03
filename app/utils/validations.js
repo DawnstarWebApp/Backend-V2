@@ -1,8 +1,9 @@
 const {ReasonPhrases, StatusCodes} = require('http-status-codes');
 const redis = require("redis");
+const {hostname} = require("os");
 const PORT = process.env.PORT || 4000;
-const PORT_REDIS = process.env.PORT || 6379;
-const redisClient = redis.createClient(PORT_REDIS);
+const REDIS_PORT = process.env.REDIS_PORT || 6379;
+const redisClient = redis.createClient(REDIS_PORT);
 
 exports.errorResponse = (err, res, objectName) => {
     console.log(err.name);
@@ -44,6 +45,7 @@ exports.showAll = (res, model) => {
 
 
     return res.status(StatusCodes.OK).send({
+        host:hostname(),
 
         status: StatusCodes.OK,
         message: ReasonPhrases.OK,
