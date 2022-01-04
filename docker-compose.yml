@@ -63,7 +63,23 @@ services:
       - "${REDIS_PORT}:6379"
     networks:
       - dawnstar
+
+  dawnstar-rabbitmq:
+    image: rabbitmq:3.9.11-management-alpine
+    container_name: 'rabbitmq'
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    ports:
+      - "${RABBITMQ_PORT}:5672"
+      - "${RABBITMQ_UI_PORT}:15672"
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - dawnstar
+    restart: on-failure
+
 networks:
   dawnstar:
     driver: bridge
-
