@@ -1,9 +1,17 @@
+<<<<<<< Updated upstream
 const {DataTypes} = require("sequelize");
+=======
+const {DataTypes, Sequelize} = require("sequelize");
+>>>>>>> Stashed changes
 
 module.exports = (sequelize) => {
 
     return sequelize.define("amenities", {
+<<<<<<< Updated upstream
             id: {
+=======
+            amenity_id: {
+>>>>>>> Stashed changes
                 type: DataTypes.UUID,
                 primaryKey: 1,
                 defaultValue: DataTypes.UUIDV4,

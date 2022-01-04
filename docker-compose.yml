@@ -1,7 +1,11 @@
 version: "3"
 services:
   dawnstar-backend:
+<<<<<<< Updated upstream
     image: dawnstar-backend
+=======
+    container_name: dawnstar-backend
+>>>>>>> Stashed changes
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,6 +14,7 @@ services:
       - dawnstar-redis
     restart: on-failure
     environment:
+<<<<<<< Updated upstream
       APP_PORT: ${APP_PORT}
       APP_ENV: ${APP_ENV}
       APP_NAME: ${APP_NAME}
@@ -20,16 +25,34 @@ services:
       - ${APP_PORT}
     networks:
       - dawnstar
+=======
+      APP_PORT: 3000
+      APP_ENV: "development"
+      APP_NAME: "development"
+      DB_HOST: "dawnstar-db"
+      DB_NAME: "dawnstardb"
+      DB_PORT: 5432
+    ports:
+      - "3000:3000"
+    networks:
+      - dawnstar-db
+
+>>>>>>> Stashed changes
   dawnstar-db:
     container_name: dawnstar-db
     image: postgres:14-alpine
     ports:
+<<<<<<< Updated upstream
       - "${DB_PORT}:5432"
+=======
+      - "5432:5432"
+>>>>>>> Stashed changes
     volumes:
       - ./postgresdata:/var/lib/postgresql/data
       - ./utils/migrations/dbinit.sql:/docker-entrypoint-initdb.d/dbinit.sql
     restart: on-failure
     environment:
+<<<<<<< Updated upstream
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
@@ -46,11 +69,32 @@ services:
     ports:
       - "${PGADMIN_LISTEN_PORT}:80"
     volumes:
+=======
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: dawnstardb
+    networks:
+      - dawnstar-db
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:6.2
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: kennguch3@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "8080:80"
+    volumes:
+#      - pgadmin-data:/var/lib/pgadmin
+>>>>>>> Stashed changes
       - ./utils/servers.json:/pgadmin4/servers.json # preconfigured servers/connections
       - ./utils/pgpass:/pgpass # passwords for the connections in this files
     depends_on:
       - dawnstar-db
     networks:
+<<<<<<< Updated upstream
       - dawnstar
 
   dawnstar-redis:
@@ -97,3 +141,23 @@ networks:
   dawnstar:
     driver: bridge
 
+=======
+      - dawnstar-db
+
+  dawnstar-redis:
+    container_name: dawnstar-redis
+    image: redis:6.2.6-alpine
+    restart: unless-stopped
+    environment:
+      REDIS_PASSWORD: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - dawnstar-db
+networks:
+  dawnstar-db:
+    driver: bridge
+volumes:
+  dawnstar-db:
+  pgadmin-data:
+>>>>>>> Stashed changes
