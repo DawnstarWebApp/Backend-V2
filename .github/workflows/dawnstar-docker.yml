@@ -5,15 +5,26 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-
       - name: Build the Container Stack
-
         id: build-container-stack
-
         env:
+          APP_PORT: ${{secrets.APP_PORT}}
+          APP_ENV: ${{secrets.APP_ENV}}
+          APP_NAME: ${{secrets.APP_NAME}}
+          DB_NAME: ${{secrets.DB_NAME}}
+          DB_PORT: ${{secrets.DB_PORT}}
           DB_USER: ${{secrets.DB_USER}}
-
+          DB_PASSWORD: ${{secrets.DB_PASSWORD}}
+          ADMIN_EMAIL: ${{secrets.ADMIN_EMAIL}}
+          PGADMIN_DEFAULT_PASSWORD: ${{secrets.PGADMIN_DEFAULT_PASSWORD}}
+          PGADMIN_LISTEN_PORT: ${{secrets.PGADMIN_LISTEN_PORT}}
+          REDIS_PASSWORD: ${{secrets.REDIS_PASSWORD}}
+          REDIS_PORT: ${{secrets.REDIS_PORT}}
+          NGINX_PORT: ${{secrets.NGINX_PORT}}
+          RABBITMQ_DEFAULT_USER: ${{secrets.RABBITMQ_DEFAULT_USER}}
+          RABBITMQ_DEFAULT_PASS: ${{secrets.RABBITMQ_DEFAULT_PASS}}
+          RABBITMQ_PORT: ${{secrets.RABBITMQ_PORT}}
+          RABBITMQ_UI_PORT: ${{secrets.RABBITMQ_UI_PORT}}
         run: docker-compose up -d
