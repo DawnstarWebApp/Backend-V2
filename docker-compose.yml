@@ -1,7 +1,7 @@
 version: "3"
 services:
   dawnstar-backend:
-    container_name: dawnstar-backend
+    image: dawnstar-backend
     build:
       context: .
       dockerfile: Dockerfile
@@ -16,17 +16,9 @@ services:
       DB_HOST: dawnstar-db
       DB_NAME: ${DB_NAME}
       DB_PORT: ${DB_PORT}
-    ports:
-      - "${APP_PORT}:${APP_PORT}"
+    expose:
+      - ${APP_PORT}
     networks:
-      - dawnstar
-  dawnstar-db:
-    container_name: dawnstar-db
-    image: postgres:14-alpine
-    ports:
-      - "${DB_PORT}:5432"
-    volumes:
-      - ./postgresdata:/var/lib/postgresql/data
       - ./utils/migrations/dbinit.sql:/docker-entrypoint-initdb.d/dbinit.sql
     restart: on-failure
     environment:
@@ -37,7 +29,6 @@ services:
       - dawnstar
 
   dawnstar-pgadmin:
-    container_name: dawnstar-pgadmin
     image: dpage/pgadmin4:6.2
     restart: unless-stopped
     environment:
@@ -63,7 +54,23 @@ services:
       - "${REDIS_PORT}:6379"
     networks:
       - dawnstar
+
+  dawnstar-rabbitmq:
+    image: rabbitmq:3.9.11-management-alpine
+    container_name: 'rabbitmq'
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    ports:
+      - "${RABBITMQ_PORT}:5672"
+      - "${RABBITMQ_UI_PORT}:15672"
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - dawnstar
+    restart: on-failure
+
 networks:
   dawnstar:
     driver: bridge
-
