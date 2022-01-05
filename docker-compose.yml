@@ -63,7 +63,20 @@ services:
       - "${REDIS_PORT}:6379"
     networks:
       - dawnstar
-
+  nginx:
+    build: ./nginx
+    image: reverse_proxy_nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - dawnstar-backend
+    healthcheck:
+      test: curl --fail -s http://localhost:1337/ || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - dawnstar
   dawnstar-rabbitmq:
     image: rabbitmq:3.9.11-management-alpine
     container_name: 'rabbitmq'
