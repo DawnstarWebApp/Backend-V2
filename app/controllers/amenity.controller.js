@@ -1,11 +1,5 @@
-<<<<<<< Updated upstream
 const {Amenity} = require("../models/index.model");
 const validations = require("../utils/validations");
-=======
-const db = require("../models/index.model");
-const validations = require("../utils/validations");
-const Amenity = db.amenity;
->>>>>>> Stashed changes
 
 //Create and Save a new Amenity
 exports.create = async (req, res) => {
@@ -32,11 +26,7 @@ exports.findAll = async (req, res) => {
 //Retrieve and return a single amenity with a amenityId
 exports.findOne = async (req, res) => {
     try {
-<<<<<<< Updated upstream
         const amenity = await Amenity.findOne({where: {id: req.params.id}})
-=======
-        const amenity = await Amenity.findOne({where: {amenity_id: req.params.amenityId}})
->>>>>>> Stashed changes
 
         return validations.showOne(res, amenity)
     } catch (err) {
@@ -49,19 +39,11 @@ exports.update = async (req, res) => {
     try {
         // Find amenity and update it with the request body
         await Amenity.update({amenity_name: req.body.name}, {
-<<<<<<< Updated upstream
             where: {id: req.params.id},
             returning: true,
             plain: true
         })
         const amenity = await Amenity.findOne({where: {id: req.params.id}})
-=======
-            where: {amenity_id: req.params.amenityId},
-            returning: true,
-            plain: true
-        })
-        const amenity = await Amenity.findOne({where: {amenity_id: req.params.amenityId}})
->>>>>>> Stashed changes
 
         return validations.successMessage(res, amenity.amenity_name, "update");
     } catch (err) {
@@ -73,17 +55,9 @@ exports.update = async (req, res) => {
 //delete a amenity with the specified amenityId in the request
 exports.delete = async (req, res) => {
     try {
-<<<<<<< Updated upstream
         await Amenity.destroy({where: {id: req.params.id}})
-=======
-        Amenity.destroy({where: {amenity_id: req.params.amenityId}})
->>>>>>> Stashed changes
         return validations.successMessage(res, "amenity", "delete");
     } catch (err) {
         return validations.errorResponse(err, res, "Amenity")
     }
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes
