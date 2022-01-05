@@ -4,6 +4,7 @@
       "Name": "Dawnstar LTD",
       "Group": "Servers",
       "Port": 5432,
+<<<<<<< Updated upstream
       "Username": "admin",
       "Host": "dawnstar-db",
       "SSLMode": "prefer",
@@ -11,6 +12,13 @@
       "Password": "dawnstar",
       "FGColor": "#475C12",
       "Comment": "Database being used by the api service"
+=======
+      "Username": "postgres",
+      "Host": "dawnstar-db",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "postgres",
+      "Password": "pgpass"
+>>>>>>> Stashed changes
     }
   }
 }

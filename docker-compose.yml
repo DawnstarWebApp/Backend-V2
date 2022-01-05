@@ -1,7 +1,7 @@
 version: "3"
 services:
   dawnstar-backend:
-    container_name: dawnstar-backend
+    image: dawnstar-backend
     build:
       context: .
       dockerfile: Dockerfile
@@ -16,8 +16,8 @@ services:
       DB_HOST: dawnstar-db
       DB_NAME: ${DB_NAME}
       DB_PORT: ${DB_PORT}
-    ports:
-      - "${APP_PORT}:${APP_PORT}"
+    expose:
+      - ${APP_PORT}
     networks:
       - dawnstar
   dawnstar-db:
@@ -37,7 +37,6 @@ services:
       - dawnstar
 
   dawnstar-pgadmin:
-    container_name: dawnstar-pgadmin
     image: dpage/pgadmin4:6.2
     restart: unless-stopped
     environment:
