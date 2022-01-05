@@ -1,4 +1,4 @@
-const {IdentificationType, Category} = require("../models/index.model");
+const {IdentificationType} = require("../models/index.model");
 const validations = require("../utils/validations");
 
 

@@ -18,12 +18,12 @@ module.exports = (sequelize) => {
                 }, len: {
                     args: [4, 32], msg: "Amenity must be at least 4 characters long and maximum of 32 characters long"
                 }
-            }
+            },
 
             identification_number: {
                 type: DataTypes.INTEGER(20), allowNull: false
 
-                V
+                
             }
         }
 
