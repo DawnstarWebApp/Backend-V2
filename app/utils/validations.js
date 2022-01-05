@@ -1,8 +1,15 @@
 const {ReasonPhrases, StatusCodes} = require('http-status-codes');
 const redis = require("redis");
+<<<<<<< Updated upstream
+const {hostname} = require("os");
+const PORT = process.env.PORT || 4000;
+const REDIS_PORT = process.env.REDIS_PORT || 6379;
+const redisClient = redis.createClient(REDIS_PORT);
+=======
 const PORT = process.env.PORT || 4000;
 const PORT_REDIS = process.env.PORT || 6379;
 const redisClient = redis.createClient(PORT_REDIS);
+>>>>>>> Stashed changes
 
 exports.errorResponse = (err, res, objectName) => {
     console.log(err.name);
@@ -44,6 +51,10 @@ exports.showAll = (res, model) => {
 
 
     return res.status(StatusCodes.OK).send({
+<<<<<<< Updated upstream
+        host:hostname(),
+=======
+>>>>>>> Stashed changes
 
         status: StatusCodes.OK,
         message: ReasonPhrases.OK,

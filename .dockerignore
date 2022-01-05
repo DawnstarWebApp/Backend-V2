@@ -1,3 +1,7 @@
 node_modules
+<<<<<<< Updated upstream
 npm-debug.log
 postgresdata
+=======
+npm-debug.log
+>>>>>>> Stashed changes
