@@ -19,14 +19,6 @@ services:
     expose:
       - ${APP_PORT}
     networks:
-      - dawnstar
-  dawnstar-db:
-    container_name: dawnstar-db
-    image: postgres:14-alpine
-    ports:
-      - "${DB_PORT}:5432"
-    volumes:
-      - ./postgresdata:/var/lib/postgresql/data
       - ./utils/migrations/dbinit.sql:/docker-entrypoint-initdb.d/dbinit.sql
     restart: on-failure
     environment:
