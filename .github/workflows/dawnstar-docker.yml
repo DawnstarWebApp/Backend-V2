@@ -27,4 +27,4 @@ jobs:
           RABBITMQ_DEFAULT_PASS: ${{secrets.RABBITMQ_DEFAULT_PASS}}
           RABBITMQ_PORT: ${{secrets.RABBITMQ_PORT}}
           RABBITMQ_UI_PORT: ${{secrets.RABBITMQ_UI_PORT}}
-        run: docker-compose up build -d
+        run: docker-compose up --build -d
