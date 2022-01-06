@@ -18,6 +18,10 @@ jobs:
           DB_USER: ${{secrets.DB_USER}}
           DB_PASSWORD: ${{secrets.DB_PASSWORD}}
           ADMIN_EMAIL: ${{secrets.ADMIN_EMAIL}}
+          POSTGRES_USER: ${{DB_USER}}
+          POSTGRES_PASSWORD: ${{DB_PASSWORD}}
+          POSTGRES_DB: ${{DB_NAME}}
+          PGADMIN_DEFAULT_EMAIL: ${{secrets.ADMIN_EMAIL}}
           PGADMIN_DEFAULT_PASSWORD: ${{secrets.PGADMIN_DEFAULT_PASSWORD}}
           PGADMIN_LISTEN_PORT: ${{secrets.PGADMIN_LISTEN_PORT}}
           REDIS_PASSWORD: ${{secrets.REDIS_PASSWORD}}
