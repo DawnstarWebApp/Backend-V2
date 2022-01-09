@@ -18,6 +18,10 @@ jobs:
           DB_USER: ${{secrets.DB_USER}}
           DB_PASSWORD: ${{secrets.DB_PASSWORD}}
           ADMIN_EMAIL: ${{secrets.ADMIN_EMAIL}}
+          POSTGRES_USER: ${{secrets.DB_USER}}
+          POSTGRES_PASSWORD: ${{secrets.DB_PASSWORD}}
+          POSTGRES_DB: ${{secrets.DB_NAME}}
+          PGADMIN_DEFAULT_EMAIL: ${{secrets.ADMIN_EMAIL}}
           PGADMIN_DEFAULT_PASSWORD: ${{secrets.PGADMIN_DEFAULT_PASSWORD}}
           PGADMIN_LISTEN_PORT: ${{secrets.PGADMIN_LISTEN_PORT}}
           REDIS_PASSWORD: ${{secrets.REDIS_PASSWORD}}
@@ -27,4 +31,4 @@ jobs:
           RABBITMQ_DEFAULT_PASS: ${{secrets.RABBITMQ_DEFAULT_PASS}}
           RABBITMQ_PORT: ${{secrets.RABBITMQ_PORT}}
           RABBITMQ_UI_PORT: ${{secrets.RABBITMQ_UI_PORT}}
-        run: docker-compose up -d
+        run: docker-compose up --build -d
